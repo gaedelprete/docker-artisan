@@ -47,10 +47,7 @@ class DockerStopCommand extends Command
             '--env-file',
             base_path('.docker.env'),
             'down',
-            // '--rmi',
-            // '--force-recreate',
             '--remove-orphans',
-            // '-d',
         ]);
 
         $process->start(function ($type, $buffer) {

@@ -52,7 +52,7 @@ class DockerStartCommand extends Command
             '--build',
             '--force-recreate',
             '--remove-orphans',
-            // '-d',
+            '-d',
         ]);
 
         $process->start(function ($type, $buffer) {

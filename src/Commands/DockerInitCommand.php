@@ -93,6 +93,7 @@ class DockerInitCommand extends Command
         $contents = file_get_contents(__DIR__ . '/../../stubs/env.stub');
 
         return str_replace([
+            '{{ laravelPath }}',
             '{{ name }}',
             '{{ phpVersion }}',
             '{{ installXdebug }}',
@@ -100,6 +101,7 @@ class DockerInitCommand extends Command
             '{{ nginxPort }}',
             '{{ mysqlPort }}',
         ], [
+            base_path(),
             $this->name,
             str_replace('.', '', $this->phpVersion),
             (bool) $this->installXdebug ? 'true' : 'false',
