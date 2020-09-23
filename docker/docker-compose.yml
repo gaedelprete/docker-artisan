@@ -2,6 +2,7 @@ version: '3.5'
 services:
   nginx:
     container_name: ${NAME}_nginx
+    image: ${NAME}_nginx
     build:
       context: .
       dockerfile: nginx/nginx.Dockerfile
@@ -15,6 +16,7 @@ services:
       - internal
   php:
     container_name: ${NAME}_php
+    image: ${NAME}_php
     build:
       context: .
       dockerfile: php/php${PHP_VERSION}.Dockerfile
@@ -27,6 +29,7 @@ services:
       - internal
   mysql:
     container_name: ${NAME}_mysql
+    image: ${NAME}_mysql
     build:
       context: .
       dockerfile: mysql/mysql${MYSQL_VERSION}.Dockerfile
@@ -43,7 +46,8 @@ services:
       - internal
 volumes:
   mysql_data:
+      name: ${NAME}_mysql_data
 networks:
   internal:
-    name: ${NAME}
+    name: ${NAME}_network
     driver: bridge

@@ -47,6 +47,8 @@ class DockerStopCommand extends Command
             '--env-file',
             base_path('.docker.env'),
             'down',
+            '--rmi',
+            'local',
             '--remove-orphans',
         ]);
 
