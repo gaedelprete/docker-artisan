@@ -57,6 +57,21 @@ class DockerInitCommand extends Command
      */
     protected $mysqlPort;
 
+    /**
+     * @var string
+     */
+    protected $dbName;
+
+    /**
+     * @var string
+     */
+    protected $dbUser;
+
+    /**
+     * @var string
+     */
+    protected $dbPassword;
+
     public function __construct()
     {
         parent::__construct();
@@ -81,6 +96,10 @@ class DockerInitCommand extends Command
         $this->nginxPort = $this->askValid('NGINX port?', '80', 'nginx_port', ['required', 'numeric', 'min:2']);
         $this->mysqlPort = $this->askValid('MYSQL port?', '3306', 'mysql_port', ['required', 'numeric', 'min:2']);
 
+        $this->dbName = $this->askValid('DB_NAME?', env('DB_NAME', 'laravel'), 'db_name', ['required', 'string', 'min:5']);
+        $this->dbUser = $this->askValid('DB_USER?', env('DB_USER', 'laravel'), 'db_user', ['required', 'string', 'min:5']);
+        $this->dbPassword = $this->askValid('DB_PASSWORD?', env('DB_PASSWORD', 'laravel'), 'db_password', ['required', 'string', 'min:5']);
+
         file_put_contents($this->dockerEnvFile, $this->buildDockerEnvContent());
 
         $this->line('All done! run php artisan docker:start and enjoy!');
@@ -100,6 +119,9 @@ class DockerInitCommand extends Command
             '{{ mysqlVersion }}',
             '{{ nginxPort }}',
             '{{ mysqlPort }}',
+            '{{ dbName }}',
+            '{{ dbUser }}',
+            '{{ dbPassword }}',
         ], [
             base_path(),
             $this->name,
@@ -108,6 +130,9 @@ class DockerInitCommand extends Command
             str_replace('.', '', $this->mysqlVersion),
             $this->nginxPort,
             $this->mysqlPort,
+            $this->dbName,
+            $this->dbUser,
+            $this->dbPassword,
         ], $contents);
     }
 
